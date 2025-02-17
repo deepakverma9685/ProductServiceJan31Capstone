@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class ProductController
@@ -42,6 +43,10 @@ public class ProductController
     {
         List<Product> products = productService.getAllProducts();
         List<ProductResponseDto> productResponseDtos = new ArrayList<>();
+
+//        List<ProductResponseDto> productResponseDtos =
+//                products.stream().map(ProductResponseDto::from)
+//                        .collect(Collectors.toList());
 
         for(Product product : products)
         {
