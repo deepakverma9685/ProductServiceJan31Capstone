@@ -6,12 +6,14 @@ import com.scaler.productservicejan31capstone.exceptions.ProductNotFoundExceptio
 import com.scaler.productservicejan31capstone.models.Product;
 
 import com.scaler.productservicejan31capstone.services.ProductService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class ProductController
@@ -19,7 +21,8 @@ public class ProductController
 
     ProductService productService;
 
-    public ProductController(ProductService productService)
+    public ProductController(@Qualifier("productDBService")
+                             ProductService productService)
     {
         this.productService = productService;
     }
@@ -42,6 +45,10 @@ public class ProductController
     {
         List<Product> products = productService.getAllProducts();
         List<ProductResponseDto> productResponseDtos = new ArrayList<>();
+
+//        List<ProductResponseDto> productResponseDtos =
+//                products.stream().map(ProductResponseDto::from)
+//                        .collect(Collectors.toList());
 
         for(Product product : products)
         {
